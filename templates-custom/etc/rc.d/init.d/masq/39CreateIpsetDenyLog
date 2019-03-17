@@ -1,0 +1,102 @@
+		{
+		# deny/log fragment to match ipsets maintained by update-ipsets
+		#
+		# add ULOG and DROP lines for each enabled ipset
+		#
+		}
+		    /sbin/iptables --new-chain ipset-denylog
+
+		    #
+		    # whitelists
+		    #
+		    # bogons contains 192.168.x.x, 172.16.x.x, 10.x.x.x, etc
+		    /usr/sbin/ipset create bogons hash:net -exist
+		    /sbin/iptables --append ipset-denylog -m set --set bogons src             --jump RETURN
+		    /usr/sbin/ipset create whitelist hash:net -exist
+		    /sbin/iptables --append ipset-denylog -m set  --set whitelist      src     --jump RETURN
+		    /usr/sbin/ipset add whitelist 192.168.200.0/24 -exist
+		    /usr/sbin/ipset add whitelist 0.0.0.0 -exist
+		    /usr/sbin/ipset add whitelist 127.0.0.1 -exist
+		    /usr/sbin/ipset add whitelist 127.0.0.2 -exist
+                    /usr/sbin/ipset add whitelist 69.46.36.28 -exist
+
+		    #
+		    # log only (for testing)
+		    #
+		    /usr/sbin/ipset create fullbogons hash:net -exist
+		    /sbin/iptables --append ipset-denylog -m set --set fullbogons     src,dst --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-fullbogons-logonly"
+		    /sbin/iptables --append ipset-denylog -m set --set fullbogons     src,dst --jump RETURN
+
+		    #
+		    # blocking ipsets
+		    #
+		    /usr/sbin/ipset create zeus_badips hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set zeus_badips    src,dst --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-zeus_badips"
+		    /sbin/iptables --append ipset-denylog -m set --set zeus_badips    src,dst --jump DROP
+		    /usr/sbin/ipset create bambenek_c2 hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set bambenek_c2    src,dst --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-bambenek_c2"
+		    /sbin/iptables --append ipset-denylog -m set --set bambenek_c2    src,dst --jump DROP
+		    /usr/sbin/ipset create blocklist_de hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set blocklist_de src,dst   --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-blocklist_de"
+		    /sbin/iptables --append ipset-denylog -m set --set blocklist_de src,dst   --jump DROP
+		    /usr/sbin/ipset create dshield hash:net -exist
+		    /sbin/iptables --append ipset-denylog -m set --set dshield src,dst        --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-dshield"
+		    /sbin/iptables --append ipset-denylog -m set --set dshield src,dst        --jump DROP
+		    /usr/sbin/ipset create feodo hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set feodo src,dst          --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-feodo"
+		    /sbin/iptables --append ipset-denylog -m set --set feodo src,dst          --jump DROP
+		#   /sbin/iptables --append ipset-denylog -m set --set fullbogons src,dst     --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-fullbogons"
+		#   /sbin/iptables --append ipset-denylog -m set --set fullbogons src,dst     --jump DROP
+		#    /sbin/iptables --append ipset-denylog -m set --set openbl src,dst         --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-openbl"
+		#    /sbin/iptables --append ipset-denylog -m set --set openbl src,dst         --jump DROP
+		#    /sbin/iptables --append ipset-denylog -m set --set palevo src,dst         --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-palevo"
+		#    /sbin/iptables --append ipset-denylog -m set --set palevo src,dst         --jump DROP
+		    /usr/sbin/ipset create spamhaus_drop hash:net -exist
+		    /sbin/iptables --append ipset-denylog -m set --set spamhaus_drop src,dst  --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-spamhaus_drop"
+		    /sbin/iptables --append ipset-denylog -m set --set spamhaus_drop src,dst  --jump DROP
+		    /usr/sbin/ipset create spamhaus_edrop hash:net -exist
+		    /sbin/iptables --append ipset-denylog -m set --set spamhaus_edrop src,dst --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-spamhaus_edrop"
+		    /sbin/iptables --append ipset-denylog -m set --set spamhaus_edrop src,dst --jump DROP
+		    /usr/sbin/ipset create sslbl hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set sslbl src,dst          --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-sslbl"
+		    /sbin/iptables --append ipset-denylog -m set --set sslbl src,dst          --jump DROP
+		    /usr/sbin/ipset create zeus hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set zeus src,dst           --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-zeus"
+		    /sbin/iptables --append ipset-denylog -m set --set zeus src,dst           --jump DROP
+		    /usr/sbin/ipset create cta_cryptowall hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set cta_cryptowall src,dst --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-cta_cryptowall"
+		    /sbin/iptables --append ipset-denylog -m set --set cta_cryptowall src,dst --jump DROP
+		    /usr/sbin/ipset create hphosts_emd hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_emd src,dst    --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-hphosts_emd"
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_emd src,dst    --jump DROP
+		    /usr/sbin/ipset create hphosts_exp hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_exp src,dst    --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-hphosts_exp"
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_exp src,dst    --jump DROP
+		    /usr/sbin/ipset create hphosts_fsa hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_fsa src,dst    --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-hphosts_fsa"
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_fsa src,dst    --jump DROP
+		    /usr/sbin/ipset create hphosts_wrz hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_wrz src,dst    --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-hphosts_wrz"
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_wrz src,dst    --jump DROP
+		    /usr/sbin/ipset create hphosts_hjk hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_hjk src,dst    --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-hphosts_hjk"
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_hjk src,dst    --jump DROP
+		    /usr/sbin/ipset create hphosts_pha hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_pha src,dst    --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-hphosts_pha"
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_pha src,dst    --jump DROP
+		    /usr/sbin/ipset create hphosts_psh hash:ip -exist
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_psh src,dst    --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-hphosts_psh"
+		    /sbin/iptables --append ipset-denylog -m set --set hphosts_psh src,dst    --jump DROP
+                    /usr/sbin/ipset create firehol_level2 hash:net -exist
+                    /sbin/iptables --append ipset-denylog -m set --set firehol_level2 src,dst --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-firehol_level2"
+                    /sbin/iptables --append ipset-denylog -m set --set firehol_level2 src,dst --jump DROP
+                    /usr/sbin/ipset create firehol_level3 hash:net -exist
+                    /sbin/iptables --append ipset-denylog -m set --set firehol_level3 src,dst --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-firehol_level3"
+                    /sbin/iptables --append ipset-denylog -m set --set firehol_level3 src,dst --jump DROP
+                    /usr/sbin/ipset create firehol_webserver hash:net -exist
+                    /sbin/iptables --append ipset-denylog -m set --set firehol_webserver src,dst --jump ULOG --ulog-nlgroup 1 --ulog-prefix "ipset-firehol_webserver"
+                    /sbin/iptables --append ipset-denylog -m set --set firehol_webserver src,dst --jump DROP
+
+		    /sbin/iptables --append ipset-denylog -j RETURN
+		    /sbin/iptables --insert INPUT 1 -j ipset-denylog
+                    # /sbin/iptables --append INPUT -j ipset-denylog

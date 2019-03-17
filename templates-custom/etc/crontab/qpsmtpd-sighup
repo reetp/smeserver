@@ -1,0 +1,4 @@
+# send SIGHUP to qpsmtpd to fix CONCURRENCY_PER_IP (Bug 10387)
+@reboot root sleep 300; /usr/bin/sv hup qpsmtpd >/dev/null 2>&1
+@reboot root sleep 300; /usr/bin/sv hup sqpsmtpd >/dev/null 2>&1
+

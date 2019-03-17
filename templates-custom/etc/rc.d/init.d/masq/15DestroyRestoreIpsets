@@ -1,0 +1,8 @@
+{
+# Destroy existing ipsets
+# And restore from backup if it exists
+#
+# must be run after rules are flushed...
+}
+/usr/sbin/ipset x
+[ -s /etc/firehol/ipsets.save ] && /usr/sbin/ipset restore < /etc/firehol/ipsets.save

@@ -1,0 +1,22 @@
+{
+my $rbantime  = $fail2ban{'PortscanBanTime'} || '604800';
+my $rfindtime = $fail2ban{'PortscanFindTime'} || '86400';
+my $rmaxretry = $fail2ban{'PortscanMaxRetry'} || '5';
+# my $raction = 'smeserver-iptables[bantime=' . $rbantime . ']' . "\n";
+my $raction .=         "iptables-ipset-proto6-allports[name=\"portscan\",bantime=$rbantime]\n";
+$raction .= "           smeserver-sendmail[name=\"Portscan\",dest=$maildest]\n"
+    if ($mail eq 'enabled');
+
+$OUT .=<<"EOF";
+
+[portscan]
+enabled  = true
+filter   = portscan
+logpath  = /var/log/iptables/current
+bantime  = $rbantime
+findtime = $rfindtime
+maxretry = $rmaxretry
+backend  = polling
+action   = $raction
+EOF
+}

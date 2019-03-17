@@ -1,0 +1,21 @@
+{
+my $rbantime  = $fail2ban{'RecidiveBanTime'} || '604800';
+my $rfindtime = $fail2ban{'RecidiveFindTime'} || '86400';
+my $rmaxretry = $fail2ban{'RecidiveMaxRetry'} || '5';
+my $raction .=         "iptables-ipset-proto6-allports[name=\"recidive\",bantime=$rbantime]\n";
+$raction .= "           smeserver-sendmail[name=\"Recidive\",dest=$maildest]\n"
+    if ($mail eq 'enabled');
+
+$OUT .=<<"EOF";
+
+[recidive]
+enabled  = true
+filter   = recidive
+logpath  = /var/log/fail2ban/daemon.log
+bantime  = $rbantime
+findtime = $rfindtime
+maxretry = $rmaxretry
+backend  = polling
+action   = $raction
+EOF
+}

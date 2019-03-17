@@ -1,0 +1,7 @@
+    # Drop all multicast traffic. Note that anything on from a local network
+    # will have already been accepted via the local_chk chain.
+    /sbin/iptables --append INPUT -s 224.0.0.0/4    -j DROP
+    /sbin/iptables --append INPUT -d 224.0.0.0/4    -j DROP
+    
+    /sbin/iptables --append OUTPUT -s 224.0.0.0/4   -j DROP
+    /sbin/iptables --append OUTPUT -d 224.0.0.0/4   -j DROP

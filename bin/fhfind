@@ -1,0 +1,4 @@
+#!/bin/bash
+pushd /etc/firehol/ipsets > /dev/null
+echo "$1" |iprange - --compare-next *.{ip,net}set
+popd > /dev/null

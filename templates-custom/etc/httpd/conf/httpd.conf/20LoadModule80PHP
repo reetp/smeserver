@@ -1,0 +1,37 @@
+{
+    return "" unless (exists $php{status} and $php{status} eq "enabled");
+
+    $OUT .= "## templates-custom of /etc/httpd/conf/httpd.conf/20LoadModule80PHP by smeserver-php-scl\n";
+    $OUT .= "\n";
+
+    if (-r "/usr/lib64/httpd/modules/libphp54-php5.so" && (($php54{PhpModule} || '') eq 'enabled')) {
+        $OUT .= "LoadModule php5_module modules/libphp54-php5.so\n";
+    }
+
+    elsif (-r "/usr/lib64/httpd/modules/libphp55-php5.so" && (($php55{PhpModule} || '') eq 'enabled')) {
+        $OUT .= "LoadModule php5_module modules/libphp55-php5.so\n";
+    }
+ 
+    elsif (-r "/usr/lib64/httpd/modules/libphp56-php5.so" && (($php56{PhpModule} || '') eq 'enabled')) {
+        $OUT .= "LoadModule php5_module modules/libphp56-php5.so\n";
+    }
+    elsif (-r "/usr/lib64/httpd/modules/libphp70.so" && (($php70{PhpModule} || '') eq 'enabled')) {
+        $OUT .= "LoadModule php7_module modules/libphp70.so\n";
+    }
+    elsif (-r "/usr/lib64/httpd/modules/libphp71.so" && (($php71{PhpModule} || '') eq 'enabled')) {
+        $OUT .= "LoadModule php7_module modules/libphp71.so\n";
+    }
+    elsif (-r "/usr/lib64/httpd/modules/libphp72.so" && (($php72{PhpModule} || '') eq 'enabled')) {
+        $OUT .= "LoadModule php7_module modules/libphp72.so\n";
+    }
+    elsif (-r "/usr/lib64/httpd/modules/libphp73.so" && (($php73{PhpModule} || '') eq 'enabled')) {
+        $OUT .= "LoadModule php7_module modules/libphp73.so\n";
+    }
+
+    else {
+        $OUT .= "LoadModule php5_module modules/libphp5.so\n";
+    }
+    $OUT .= "\n";
+    $OUT .= "## templates-custom of /etc/httpd/conf/httpd.conf/20LoadModule80PHP by smeserver-php-scl\n";
+}
+

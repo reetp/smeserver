@@ -1,0 +1,32 @@
+{
+    #check if TLS is enabled 
+	if (($ftp{TLSEnable} || 'no') eq 'yes') {
+	
+	#check if TLS is required: values "on", "off"
+	#if "on" normal ftp connections are dropped
+	my $tlsrequired = $ftp{'TLSRequired'} || "off";
+	
+	#use the same crt and key of httpd
+	my $crt = $modSSL{'crt'} ||
+        "/home/e-smith/ssl.crt/${SystemName}.${DomainName}.crt";
+
+    my $key = $modSSL{'key'} ||
+        "/home/e-smith/ssl.key/${SystemName}.${DomainName}.key";
+
+    $OUT .= <<SSL_END;
+
+<IfModule mod_tls.c>
+TLSEngine                  on
+TLSLog                     /var/log/proftpd/tls.log
+TLSProtocol                SSLv23
+TLSOptions                 NoCertRequest AllowClientRenegotiations
+TLSRSACertificateFile      $crt
+TLSRSACertificateKeyFile   $key
+TLSVerifyClient            off
+TLSRequired                $tlsrequired
+</IfModule>
+SSL_END
+
+}
+}
+

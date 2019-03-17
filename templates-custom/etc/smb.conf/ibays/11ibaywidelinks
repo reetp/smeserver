@@ -1,0 +1,5 @@
+{
+    if ( ($ibay->prop('WideLinks') || 'no') eq 'yes') {
+        $OUT .= "follow symlinks = yes\nwide links = yes\n";
+    }
+}

@@ -1,0 +1,8 @@
+
+    /sbin/iptables --new-chain state_chk
+    # Allow any already established or related connection
+    /sbin/iptables --append state_chk -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+    # We filter all input and forwarded traffic this way
+    /sbin/iptables --insert INPUT -j state_chk
+    /sbin/iptables --insert FORWARD -j state_chk

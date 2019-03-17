@@ -1,0 +1,22 @@
+{
+# We need to be sure that we have enough rules to replace when we adjust the
+# ruleset. We currently have three settings for packetlogging - "all", 
+# "most" and "some". 
+# 
+# "some" equates to this:
+#
+# ...
+#    /sbin/iptables --replace denylog 1 -p udp --dport 520 --jump DROP
+#    /sbin/iptables --replace denylog 2 -p udp --dport 137:139 --jump DROP
+#    /sbin/iptables --replace denylog 3 -p tcp --dport 137:139 --jump DROP
+#    /sbin/iptables --replace denylog 4 --jump ULOG ...
+# ...
+#
+# After we do the logging with rule 4, we need rule 5 to drop the packet.
+}
+    /sbin/iptables --new-chain f2b-denylog
+    /sbin/iptables --append f2b-denylog --jump DROP
+    /sbin/iptables --append f2b-denylog --jump DROP
+    /sbin/iptables --append f2b-denylog --jump DROP
+    /sbin/iptables --append f2b-denylog --jump DROP
+    /sbin/iptables --append f2b-denylog --jump DROP

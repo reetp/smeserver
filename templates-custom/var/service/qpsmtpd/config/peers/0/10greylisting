@@ -1,0 +1,1 @@
+greylisting sender 0 recipient 0 deny_late 1 black_timeout 1 reject 1 db_dir /var/lib/qpsmtpd/greylisting

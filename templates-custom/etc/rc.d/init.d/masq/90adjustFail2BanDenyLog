@@ -1,0 +1,29 @@
+{
+    my $logging = $masq{Logging} || "none";
+    my $target = $masq{DenylogTarget} eq "drop" ? 'DROP' : 'REJECT';
+
+    if ( $logging eq "none" )
+    {
+        $OUT .= " /sbin/iptables --replace f2b-denylog 1 --jump $target";
+    }
+    elsif ($logging eq "all")
+    {
+        $OUT .= <<"HERE";
+    /sbin/iptables --replace f2b-denylog 1 --jump ULOG --ulog-nlgroup 1 --ulog-prefix \"fail2ban:\"
+    /sbin/iptables --replace f2b-denylog 2 --jump $target
+    /sbin/iptables --replace f2b-denylog 3 --jump $target
+    /sbin/iptables --replace f2b-denylog 4 --jump $target
+    /sbin/iptables --replace f2b-denylog 5 --jump $target
+HERE
+    }
+    else
+    {
+        $OUT .= <<"HERE";
+    /sbin/iptables --replace f2b-denylog 1 -p udp --dport 520 --jump $target
+    /sbin/iptables --replace f2b-denylog 2 -p udp --dport 137:139 --jump $target
+    /sbin/iptables --replace f2b-denylog 3 -p tcp --dport 137:139 --jump $target
+    /sbin/iptables --replace f2b-denylog 4 --jump ULOG --ulog-nlgroup 1 --ulog-prefix \"fail2ban:\"
+    /sbin/iptables --replace f2b-denylog 5 --jump $target
+HERE
+    }
+}

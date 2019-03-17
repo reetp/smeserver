@@ -1,0 +1,33 @@
+{
+    my $f2bdb = esmith::ConfigDB->open_ro('fail2ban') ||
+        esmith::ConfigDB->create('fail2ban');
+    # Find the current Fail2Ban_$$ chain, and create a new one.
+    $OUT .=<<'EOF';
+    OLD_Fail2Ban=$(get_safe_id Fail2Ban filter find)
+    NEW_Fail2Ban=$(get_safe_id Fail2Ban filter new)
+    /sbin/iptables --new-chain $NEW_Fail2Ban
+EOF
+
+    if ( ($fail2ban{'status'} || 'disabled') eq 'enabled' ){
+        foreach my $ban ( $f2bdb->get_all_by_prop(type=>('ban')) ){
+            my $ip = $ban->prop('Host');
+            my $proto = $ban->prop('Protocol') || '';
+            my $port = $ban->prop('Port') || '';
+            $OUT .= "    /sbin/iptables --append \$NEW_Fail2Ban -s $ip";
+            $OUT .= " -p $proto" if ($proto =~ m/^tcp|udp|icmp$/);
+            $OUT .= " -m multiport --dports $port" if ($proto =~ m/^tcp|udp$/ && $port =~ m/^\d+(,\d+)*$/);
+            $OUT .= " -j f2b-denylog\n";
+        }
+        $OUT .= "    /sbin/iptables --append  \$NEW_Fail2Ban" .
+                " -j RETURN\n";
+    }
+
+    # Having created a new Fail2Ban chain, activate it and destroy the old.
+    $OUT .=<<'EOF';
+    /sbin/iptables --replace Fail2Ban 1 \
+            --jump $NEW_Fail2Ban
+    /sbin/iptables --flush $OLD_Fail2Ban
+    /sbin/iptables --delete-chain $OLD_Fail2Ban
+EOF
+
+}

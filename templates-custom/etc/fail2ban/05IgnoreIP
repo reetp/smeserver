@@ -1,0 +1,3 @@
+# manual ignoreip list from
+# /etc/e-smith/templates-custom/etc/fail2ban/jail.conf/05IgnoreIP
+ignoreip = 205.175.220.56/29 69.46.36.28/32

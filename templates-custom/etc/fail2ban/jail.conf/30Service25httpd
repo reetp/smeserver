@@ -1,0 +1,111 @@
+{
+
+my $status = ${'httpd-e-smith'}{'status'} || 'disabled';
+my $f2b = ${'httpd-e-smith'}{'Fail2Ban'} || 'enabled';
+return "" if (($status ne 'enabled') || ($f2b ne 'enabled'));
+my @ports = ();
+push @ports, (${'httpd-e-smith'}{'TCPPort'} || '80');
+push @ports, ($modSSL{'TCPPort'} || '443');
+my $port = join (",", @ports);
+
+$OUT .=<<"EOF";
+
+[http-overflows]
+enabled  = true
+filter   = apache-overflows
+logpath  = /var/log/httpd/error_log
+	   /var/log/httpd/admin_error_log
+action   = smeserver-iptables[port="$port",protocol=tcp,bantime=$bantime]
+           iptables-ipset-proto6[name="http-overflows",port="$port",protocol=tcp,bantime=$bantime]
+EOF
+
+$OUT .= "           smeserver-sendmail[name=\"Apache (overflows)\",dest=$maildest]\n"
+    if ($mail eq 'enabled');
+
+$OUT .=<<"EOF";
+
+[http-noscript]
+enabled  = true
+filter   = apache-noscript
+logpath  = /var/log/httpd/error_log
+           /var/log/httpd/admin_error_log
+action   = smeserver-iptables[port="$port",protocol=tcp,bantime=$bantime]
+           iptables-ipset-proto6[name="http-noscript",port="$port",protocol=tcp,bantime=$bantime]
+EOF
+
+$OUT .= "           smeserver-sendmail[name=\"Apache (noscript)\",dest=$maildest]\n"
+    if ($mail eq 'enabled');
+
+$OUT .=<<"EOF";
+
+[http-scan]
+enabled  = true
+filter   = apache-scan
+logpath  = /var/log/httpd/error_log
+           /var/log/httpd/admin_error_log
+action   = smeserver-iptables[port="$port",protocol=tcp,bantime=$bantime]
+           iptables-ipset-proto6[name="http-scan",port="$port",protocol=tcp,bantime=$bantime]
+EOF
+
+$OUT .= "           smeserver-sendmail[name=\"Apache (scan)\",dest=$maildest]\n"
+    if ($mail eq 'enabled');
+
+$OUT .=<<"EOF";
+
+[http-auth]
+enabled  = true
+filter   = apache-auth
+logpath  = /var/log/httpd/error_log
+           /var/log/httpd/admin_error_log
+action   = smeserver-iptables[port="$port",protocol=tcp,bantime=$bantime]
+           iptables-ipset-proto6[name="http-auth",port="$port",protocol=tcp,bantime=$bantime]
+EOF
+
+$OUT .= "           smeserver-sendmail[name=\"Apache (auth)\",dest=$maildest]\n"
+    if ($mail eq 'enabled');
+
+$OUT .=<<"EOF";
+
+[http-badbots]
+enabled  = true
+filter   = apache-badbots
+logpath  = /var/log/httpd/error_log
+           /var/log/httpd/admin_error_log
+action   = smeserver-iptables[port="$port",protocol=tcp,bantime=$bantime]
+           iptables-ipset-proto6[name="http-badbots",port="$port",protocol=tcp,bantime=$bantime]
+EOF
+
+$OUT .= "           smeserver-sendmail[name=\"Apache (badbots)\",dest=$maildest]\n"
+    if ($mail eq 'enabled');
+
+$OUT .=<<"EOF";
+
+[http-shellshock]
+enabled  = true
+filter   = apache-shellshock
+logpath  = /var/log/httpd/error_log
+           /var/log/httpd/admin_error_log
+action   = smeserver-iptables[port="$port",protocol=tcp,bantime=$bantime]
+           iptables-ipset-proto6[name="http-shellshock",port="$port",protocol=tcp,bantime=$bantime]
+EOF
+
+$OUT .= "           smeserver-sendmail[name=\"Apache (shellshock)\",dest=$maildest]\n"
+    if ($mail eq 'enabled');
+
+$OUT .=<<"EOF";
+
+[http-fakegooglebot]
+enabled  = true
+filter   = apache-fakegooglebot
+logpath  = /var/log/httpd/error_log
+           /var/log/httpd/admin_error_log
+action   = smeserver-iptables[port="$port",protocol=tcp,bantime=$bantime]
+           iptables-ipset-proto6[name="http-fakegooglebot",port="$port",protocol=tcp,bantime=$bantime]
+EOF
+
+$OUT .= "           smeserver-sendmail[name=\"Apache (fakegooglebot)\",dest=$maildest]\n"
+    if ($mail eq 'enabled');
+
+
+
+}

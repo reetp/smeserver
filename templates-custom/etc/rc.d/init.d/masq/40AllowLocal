@@ -1,0 +1,16 @@
+
+    # Create a new chain to handle local traffic
+    /sbin/iptables --new-chain local_chk
+    /sbin/iptables --new-chain local_chk_1
+
+    # Accept any traffic initiated on "local" interfaces
+    if [ -n "$OUTERIF" ]; then
+        /sbin/iptables --append local_chk_1 \
+	    ! --in-interface $OUTERIF -j ACCEPT
+    fi
+    /sbin/iptables --append local_chk -j local_chk_1
+
+    # We filter all input and forwarded traffic this way
+    /sbin/iptables --append INPUT -j local_chk
+    /sbin/iptables --append FORWARD -j local_chk
+
