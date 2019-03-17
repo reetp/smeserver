@@ -1,0 +1,43 @@
+		{
+		# deny/log fragment to match ipsets maintained by emerging-threats:
+		#  https://rules.emergingthreats.net/fwrules/emerging-Block-IPs.txt
+		#
+		# create ipsets
+		# add ULOG and DROP entries
+		#
+		}
+		
+		# create et-* lists (-! suppressing errors)
+		/sbin/ipset -! create et-blaclist iphash --hashsize 26244
+		/sbin/ipset -! create et-blacklistnet nethash --hashsize 3456
+		/sbin/ipset -! create et-whitelist hash:net -exist
+		
+		# populate et-whitelist
+		# this should use db variables and localnets...
+		/sbin/ipset add et-whitelist 192.168.200.0/24 -exist
+		/sbin/ipset add et-whitelist 0.0.0.0 -exist
+		/sbin/ipset add et-whitelist 127.0.0.1 -exist
+		/sbin/ipset add et-whitelist 127.0.0.2 -exist
+		/sbin/ipset add et-whitelist 69.46.36.28 -exist
+		
+		# delete all existing rules relating to et-blacklist and et-whitelist entries
+		for r in $(iptables --line-numbers --list INPUT |grep "match-set.*et-"  |cut -d\  -f1 |sort -r)
+		do 
+			iptables -D INPUT $r
+		done
+		
+		# create new chain
+		/sbin/ipset --new-chain emerging-threats-blocklist-denylog
+		
+		# create new rules
+		# et-whitelist
+		/sbin/ipset --append emerging-threats-blocklist-denylog -m set --set et-whitelist src --jump RETURN
+		
+		# et-blacklists
+		/sbin/iptables -A INPUT -m set --match-set et-blacklistnet src,dst -j ULOG --ulog-nlgroup 1 --ulog-prefix "et-blacklistnet: "
+		/sbin/iptables -A INPUT -m set --match-set et-blacklistnet src,dst -j DROP
+		/sbin/iptables -A INPUT -m set --match-set et-blacklist src,dst -j ULOG --ulog-nlgroup 1 --ulog-prefix "et-blacklist: "
+		/sbin/iptables -A INPUT -m set --match-set et-blacklist src,dst -j DROP
+
+		# activate new rules
+		/sbin/iptables --insert INPUT 1 -j emerging-threats-blocklist-denylog
