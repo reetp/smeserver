@@ -11,7 +11,12 @@ do
   expiress=$(date -d $(date -d "${expires}" '+%Y%m%d') '+%s')
   today=$(date -d $(date '+%Y%m%d') '+%s')
   diffdays=$(( ($expiress - $today) / (60*60*24) ))
-
-  echo $(date -d "${expires}" '+%Y%m%d') \($diffdays days from today\)
+  if (( diffdays < 30 ))
+  then
+    renew="===RENEW NOW==="
+  else
+    renew=""
+  fi
+  echo $(date -d "${expires}" '+%Y%m%d') \($diffdays days\) $renew
 
 done

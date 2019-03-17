@@ -11,6 +11,7 @@
 # * delets temporary ipsets
 #
 # Changelog:
+# 17 Mar 2019 / 1.0b m.mccarn@aicr.org update to create missing statefile
 # 02 Mar 2019 / 1.0a m.mccarn@aicr.org update for Ubuntu 18.04 / new URLs
 # 08 Dec 2009 / 1.0 thomas@chaschperli.ch initial version
 
