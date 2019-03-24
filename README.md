@@ -1,6 +1,6 @@
 # smeserver
 
-Notes on managing your SME server configuration using git
+Notes on managing a Koozali SME server configuration using git
 
 Instructions:
 1. Create a repository for your scripts in github.  I named mine "smeserver".
