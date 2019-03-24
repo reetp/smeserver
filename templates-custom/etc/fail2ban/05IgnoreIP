@@ -1,0 +1,40 @@
+{
+
+use esmith::NetworksDB;
+use Net::IPv4Addr;
+
+my $n = esmith::NetworksDB->open_ro() ||
+  die "Couldn't open networks DB\n";
+
+my @ip = ("127.0.0.0/8", $LocalIP);
+
+# Add hosts which can access the server-manager to the whitelist
+unless (($fail2ban{FilterValidRemoteHosts} || 'disabled') eq 'enabled'){
+  foreach (split /[,;]/, (${'httpd-admin'}{'ValidFrom'} || '')){
+      my $addr = $_;
+      $addr .= '/32' unless ($addr =~ m/\/\d{1,2}$/);
+      my ($ip,$bits) = Net::IPv4Addr::ipv4_parse("$addr");
+      push @ip, "$ip/$bits" unless "$ip/$bits" eq '0.0.0.0/0';
+  }
+}
+
+unless (($fail2ban{FilterLocalNetworks} || 'disabled') eq 'enabled'){
+  foreach my $net ($n->networks){
+    my $key = $net->key;
+    my $mask = $net->prop('Mask');
+    my ($ip,$bits) = Net::IPv4Addr::ipv4_parse("$key/$mask");
+    push @ip, "$ip/$bits";
+  }
+}
+
+# Add a local whitelist
+foreach (split /[,;]/, ($fail2ban{'IgnoreIP'} || '')){
+    my $addr = $_;
+    $addr .= '/32' unless ($addr =~ m/\/\d{1,2}$/);
+    my ($ip,$bits) = Net::IPv4Addr::ipv4_parse("$addr");
+    push @ip, "$ip/$bits";
+}
+
+$OUT .= "ignoreip = " . join(" ", @ip);
+
+}
