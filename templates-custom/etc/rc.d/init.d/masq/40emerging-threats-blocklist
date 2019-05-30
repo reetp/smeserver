@@ -19,6 +19,7 @@
 		/usr/sbin/ipset add et-whitelist 127.0.0.1 -exist
 		/usr/sbin/ipset add et-whitelist 127.0.0.2 -exist
 		/usr/sbin/ipset add et-whitelist 69.46.36.28 -exist
+		/usr/sbin/ipset add et-whitelist 204.178.115.101 -exist
 		
 		# delete all existing rules relating to et-blacklist and et-whitelist entries
 		for r in $(iptables --line-numbers --list INPUT |grep "match-set.*et-"  |cut -d\  -f1 |sort -r)
