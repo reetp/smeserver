@@ -19,6 +19,7 @@
 		    /usr/sbin/ipset add whitelist 127.0.0.1 -exist
 		    /usr/sbin/ipset add whitelist 127.0.0.2 -exist
                     /usr/sbin/ipset add whitelist 69.46.36.28 -exist
+                    /usr/sbin/ipset add whitelist 204.178.115.101 -exist
 
 		    #
 		    # log only (for testing)

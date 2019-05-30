@@ -9,8 +9,8 @@ plugins=/usr/share/qpsmtpd/plugins
 # add an anchor for "_top" so that the back-links work
 # remove </dd> </dl> and </dt> since these appear on the page if included
 # comments at the bottom showing the time and date and the command used  
-perldoc -T -ohtml $plugins/$1 |pandoc -f html -t mediawiki |sed '1 i\\n\n\n<span id="_top">[[Qpsmtpd#Plugins]]</span>' |sed -e 's#</d.>##'
+perldoc -T -ohtml $plugins/$1 2>&1 |pandoc -f html -t mediawiki |sed '1 i\\n\n\n<span id="_top">[[Qpsmtpd#Plugins]]</span>' |sed -e 's#</d.>##'
 echo \<\!-- Generated $(date) using
-echo perldoc -T -ohtml $plugins/$1 \|pandoc -f html -t mediawiki \|sed '1 i\\n\n\n<span id="_top">[[Qpsmtpd#Plugins]]</span>' \|sed -e 's#</d.>##'
+echo 'perldoc -T -ohtml $plugins/$1 \|pandoc -f html -t mediawiki \|sed '\''1 i\\n\n\n<span id="_top">[[Qpsmtpd#Plugins]]</span>'\'' \|sed -e '\''s#</d.>##'\'
 echo --\>
 echo -e "----\n[[Category:Qpsmtpd|$1]]"
