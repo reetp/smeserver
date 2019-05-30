@@ -100,17 +100,17 @@ then
 
 
         # Host IP Adresses
-        echo "-N ${IPSET_BLACKLIST_HOST}_TEMP iphash --hashsize 26244" >>$IPSET_RESTOREFILE
+        echo "-N ${IPSET_BLACKLIST_HOST}_TEMP iphash --hashsize 2624 -exist" >>$IPSET_RESTOREFILE
         for i in $(egrep '^[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}$' "$ET_FWRULES_TEMP")
         do
-                echo "-A ${IPSET_BLACKLIST_HOST}_TEMP $i" >>$IPSET_RESTOREFILE
+                echo "-A ${IPSET_BLACKLIST_HOST}_TEMP $i -exist" >>$IPSET_RESTOREFILE
         done
 
         # NET addresses
-        echo "-N ${IPSET_BLACKLIST_NET}_TEMP nethash --hashsize 3456" >>$IPSET_RESTOREFILE
+        echo "-N ${IPSET_BLACKLIST_NET}_TEMP nethash --hashsize 3456 -exist" >>$IPSET_RESTOREFILE
         for i in $(egrep '^[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}/[[:digit:]]{1,2}$' "$ET_FWRULES_TEMP")
         do
-                echo "-A ${IPSET_BLACKLIST_NET}_TEMP $i" >>$IPSET_RESTOREFILE
+                echo "-A ${IPSET_BLACKLIST_NET}_TEMP $i -exist" >>$IPSET_RESTOREFILE
         done
 
         # needed for ipset --restore
