@@ -1,0 +1,20 @@
+mysql.allow_persistent                 = On
+variables_order                        = "EGPCS"
+register_globals                       = Off
+register_argc_argv                     = On
+post_max_size                          = {
+    my $ms = $php54{PostMaxSize} || $php{PostMaxSize} || "20M";
+    $OUT .= "$ms";
+}
+;gpc_order                              = "GPC" #deprecated
+;magic_quotes_gpc                       = Off #deprecated
+;magic_quotes_runtime                   = Off #deprecated
+;magic_quotes_sybase                    = Off #deprecated
+auto_prepend_file                      =
+auto_append_file                       =
+default_mimetype                       = "text/html"
+
+; added by stephdl
+variables_order = "EGPCS"
+request_order = "GP"
+auto_globals_jit = On

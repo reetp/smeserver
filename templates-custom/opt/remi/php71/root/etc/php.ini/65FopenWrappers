@@ -1,0 +1,5 @@
+allow_url_fopen = {($php71{AllowUrlFopen} || $php{AllowUrlFopen} || 'Off')}
+;added by stephdl
+allow_url_include = Off
+default_socket_timeout = 60
+

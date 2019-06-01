@@ -1,0 +1,10 @@
+file_uploads                           = On
+upload_max_filesize                    = {
+    my $mf = $php56{UploadMaxFilesize} || $php{UploadMaxFilesize} || "10M";
+    $OUT .= "$mf";
+}
+; added by stephdl see $php56{MaxFileUpload}
+max_file_upload                        = {
+    my $mfu = $php56{MaxFileUpload} || $php{MaxFileUpload} || "20";
+    $OUT .= "$mfu";
+}

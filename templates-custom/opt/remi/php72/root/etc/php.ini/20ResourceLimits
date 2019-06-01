@@ -1,0 +1,14 @@
+max_execution_time                     = {
+    my $et = $php72{MaxExecutionTime} || $php{MaxExecutionTime} || "30";
+    $OUT .= "$et";
+}
+memory_limit                           = {
+    my $ml = $php72{MemoryLimit} || $php{MemoryLimit} || "128M";
+    $OUT .= "$ml";
+}
+;added by stephdl see $php72{MaxInputTime}
+max_input_time                     = {
+    my $it = $php72{MaxInputTime} || $php{MaxInputTime} || "60";
+    $OUT .= "$it";
+}
+
