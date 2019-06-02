@@ -1,0 +1,4 @@
+# 80custom_rules
+mimeheader MIME_FAIL   Content-Type =~ /\.(rtf|iso|img|xls)\b/i
+describe   MIME_FAIL   Blacklisted file extension detected
+score      MIME_FAIL   95

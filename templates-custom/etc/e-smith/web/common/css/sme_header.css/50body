@@ -1,0 +1,128 @@
+{
+    $OUT = <<'EOF';
+
+/* INSERT COPYRIGHT HERE */
+
+/* This is the stylesheet used in the header panel only
+
+   This file inherits the styles use in sme_core in the "header" section, and
+   as noted in the code below.  Note that some of the styles here are empty.  
+	This is because the style definition has moved safely to sme_core.css
+	and the placeholder is left here for reference or future use.
+
+   There are a lot of styles in here, so read carefully.  Each one is documented.
+
+	Styles that were in the old stylesheets, but are not used in the UI are at the
+	bottom, commented out.  These can be removed at the end of the 6.0 cycle */
+
+/* general table cell properties */
+td { 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px; 
+    color: black; 
+}
+
+table {
+    width=100%;
+	 margin-top: 0px; 
+    margin-right: 0px; 
+    margin-bottom: 1px; 
+    margin-left: 0px; 
+}  
+
+/* This is the class of the product bar, orange in the case of the 6000 MAS */
+.hilightbar {
+    border-color: #888888 ; 
+    border-style: solid; 
+    border-top-width: 1px; 
+    border-right-width: 0px; 
+    border-bottom-width: 1px; 
+    border-left-width: 0px;
+}
+
+/* this is the class of the grey bar under the hilight bar, where text and
+   buttons live.
+*/
+.infobar {
+    border-color: #888888 ; 
+    border-style: solid; 
+    border-top-width: 0px; 
+    border-right-width: 0px; 
+    border-bottom-width: 10px; 
+    border-left-width: 0px;
+}
+
+.darkergrey {
+    color: #666666;
+}
+
+/* default class for links*/
+a:link, a:visited, a:hover, a:active { 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px; 
+    color: black; 
+    background: #cccccc; 
+    text-decoration: none;
+    text-align: left; 
+    border-color: #cccccc #cccccc #cccccc #cccccc ; 
+    margin-top: 0px; 
+    margin-right: 0px; 
+    margin-bottom: 0px; 
+    margin-left: 0px; 
+    border-style: solid; 
+    border-top-width: 1px; 
+    border-right-width: 1px; 
+    border-bottom-width: 1px; 
+    border-left-width: 1px;
+    padding-right: 10px; 
+    padding-left: 10px; 
+ }
+
+a:hover { 
+    background: #e8f3e1; 
+    border-color: #000000 #000000 #000000 #000000; 
+}
+
+a:active { 
+    color: white; 
+    background: black; 
+    border-color: #000000 #000000 #000000 #000000; 
+}
+
+
+/* These a classes define the update link appearance, using a pseudoclass
+   called "update" */    
+a.update:link, a.update:visited, a.update:hover, a.update:active { 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px; 
+    color: #ffffff; 
+    background-color: #ee0000;
+    text-decoration: none;
+    text-align: left; 
+    border-color: #cccccc ; 
+    margin-top: 0px; 
+    margin-right: 0px; 
+    margin-bottom: 0px; 
+    margin-left: 0px; 
+    border-style: solid; 
+    border-top-width: 1px; 
+    border-right-width: 1px; 
+    border-bottom-width: 1px; 
+    border-left-width: 1px;
+    padding-right: 10px; 
+    padding-left: 10px; 
+ }
+
+a.update:hover { 
+    background: #FF8080; 
+    border-color: #ff0000;
+}
+
+a.update:active { 
+    color: #ff0000; 
+    background: #ffffff; 
+    border-color: #ff0000;
+}
+
+EOF
+}

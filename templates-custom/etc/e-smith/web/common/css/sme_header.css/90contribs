@@ -1,0 +1,31 @@
+{
+    $OUT =<<'HERE';
+
+/* general table cell properties */
+td {
+font-size: 4px;
+margin-bottom: 0px;
+    }
+.hilightbar {
+border-color: #8ebe43;
+    }
+.infobar {
+border-color: #8ebe43;
+background: #98d36e;
+border-color: #98d36e #98d36e #98d36e #98d36e;
+    }
+/* default class for links*/
+a:link, a:visited, a:hover, a:active {
+background: #98d36e;
+    }
+a:hover {
+background: #e8f3e1;
+    }
+a:active {
+background: #999999;
+    }
+a.update:hover {
+background: #e8f3e1;
+    }
+HERE
+}

@@ -1,0 +1,45 @@
+{
+    $OUT =<<'HERE';
+/* contribs.org styling */
+body.header {
+background: #bee6a2;
+    }
+.hilightbar {
+background-color: #ffffff;
+    }
+.infobar {
+background-color: #98d36e;
+    }
+a.update {
+font-size: 11px;
+background: #98d36e;
+    }
+
+/* Core styles for use with sme_menu.css */
+body.menu {
+background-color: #e8f3e1;
+    }
+td.section {
+background-color: #e8f3e1;
+    }
+a.item {
+background: #e8f3e1;
+    }
+a.sl {
+background: #e8f3e1;
+    }
+a.alert {
+background: #e8f3e1;
+    }
+    
+/* Core Styles for use with sme_main.css */
+hr.sectionbar {
+color: #8ebe43;
+background-color: #8ebe43;
+    }
+hr.sme-copyrightbar {
+color: #8ebe43;
+background-color: #8ebe43;
+    }
+HERE
+}
