@@ -130,7 +130,7 @@ While working on the login issue from [forums.contribs.org](https://forums.contr
         mysql57 -e "CREATE USER racktables_user@localhost IDENTIFIED BY '$DBPASS';"
         mysql57 -e "GRANT ALL PRIVILEGES ON racktables_db.* TO racktables_user@localhost;"
 
-  * run web installerspecify mysql57 socket
+  * run web installer
     * https://192.168.200.11/racktables/?module=installer
       * specify "Unix Socket" 
       * Change socket to ```/var/lib/mysql/mysql57.sock```
