@@ -14,8 +14,7 @@ https://forums.contribs.org/index.php/topic,54013.0/topicseen.html
     #
     # create  /etc/e-smith/templates-custom/etc/php.ini/15ioncube
     mkdir -p /etc/e-smith/templates-custom/etc/php.ini/
-    echo 'zend_extension                         = \
-    /usr/lib64/php/modules/ioncube_loader_lin_5.3.so' \
+    echo 'zend_extension                         = /usr/lib64/php/modules/ioncube_loader_lin_5.3.so' \
     > /etc/e-smith/templates-custom/etc/php.ini/15ioncube
     expand-template /etc/php.ini
     sv t httpd-e-smith
