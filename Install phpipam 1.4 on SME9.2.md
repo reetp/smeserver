@@ -113,7 +113,7 @@ Forum Post: [https://forums.contribs.org/index.php?topic=54036.0;topicseen](Inst
         
   * Create the db schema
   
-        mysql phpipam < db/SCHEMA.sql
+        mysql ${DBNAME} < db/SCHEMA.sql
 
 * Change the admin password
 
