@@ -54,9 +54,10 @@ Forum Post: [https://forums.contribs.org/index.php?topic=54036.0;topicseen](Inst
 
 
 * Enable mysql access on port 3306
-    config setprop mysqld LocalNetworkingOnly no
-    expand-template /etc/my.cnf
-    sv t /service/mysqld
+
+      config setprop mysqld LocalNetworkingOnly no
+      expand-template /etc/my.cnf
+      sv t /service/mysqld
 
 * Install phpipam
 
