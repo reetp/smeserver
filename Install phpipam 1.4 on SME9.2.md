@@ -1,9 +1,8 @@
-Forum Post: [https://forums.contribs.org/index.php?topic=54036.0;topicseen](Install phpIPAM)
+Forum Post: [Install phpIPAM](https://forums.contribs.org/index.php?topic=54036.0;topicseen)
 
-[https://www.phpipam.net/](phpIPAM)
+[phpIPAM](https://www.phpipam.net/)
 
-* Install php-scl and php dependencies listed [https://www.phpipam.net/documents/installation/](phpIPAM Installation)
-
+* Install php-scl and php dependencies listed [phpIPAM Installation](https://www.phpipam.net/documents/installation/)
 
   * remi-safe  (I prefer to have custom repositories disabled, but that's me...)
 
