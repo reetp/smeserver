@@ -32,7 +32,7 @@ for repo in $REPOS; do
 
         # generate the list of rpms installed from the repo
         unset rpms
-        for rpm in $(/sbin/e-smith/audittools/newrpms |awk -v repo_awk=@$repo 'repo_awk==$3 {print $1}'); do
+        for rpm in $(/usr/bin/yum list installed |grep -vi gpg-pubkey |awk -v repo_awk=@$repo 'repo_awk==$3 {print $1}'); do
                 if [ ! -z "$rpms" ]; then
                         rpms="$rpms,$rpm"
                 else
