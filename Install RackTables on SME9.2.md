@@ -144,3 +144,47 @@ While working on the login issue from [forums.contribs.org](https://forums.contr
         chown admin /home/e-smith/files/ibays/racktables/html/inc/secret.php
 
 		
+Sample LDAP config (needs formatting up)
+
+edit secret.php
+
+#$user_auth_src = 'database';
+#$require_local_account = TRUE;
+
+$user_auth_src = 'ldap';
+$require_local_account = FALSE;
+
+// Note - we have a specific 'auth' account for this sort of bind/check
+
+$LDAP_options = array
+(
+	'server' => 'localhost',
+//	'domain' => 'example.com',
+	'search_attr' => 'uid',
+	'search_dn' => 'ou=Users,dc=yourserver,dc=com',
+ // The following credentials will be used when searching for the user's DN:
+	'search_bind_rdn' => 'uid=auth,ou=Users,dc=yourserver,dc=com',
+	'search_bind_password' => 'your_auth_password',
+	'displayname_attrs' => 'inetOrgPerson',
+	'options' => array (LDAP_OPT_PROTOCOL_VERSION => 3),
+	'use_tls' => 0,         // 0 == don't attempt, 1 == attempt, 2 == require
+);
+
+
+For testing it is easier to login with one browser as admin and then as a user on another browser.
+
+When you login you will get a permission denied screen but it will show you the ${user} trying to login.
+
+You can then add them in the Permissions screen eg:
+
+allow {$userid_1}
+allow {$username_john}
+allow {$username_fred}
+
+I *think* that 'admin is ALWAYS a local account.
+
+
+Also note you can set up the Plugins dir eg
+
+# Set this if you need to override the default plugins directory.
+$racktables_plugins_dir = '/home/e-smith/files/ibays/racktables/html/plugins';
